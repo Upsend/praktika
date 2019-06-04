@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Апр 15 2019 г., 19:24
+-- Время создания: Июн 04 2019 г., 22:34
 -- Версия сервера: 5.6.41
 -- Версия PHP: 5.5.38
 
@@ -40,7 +40,10 @@ CREATE TABLE `autos` (
 --
 
 INSERT INTO `autos` (`id_auto`, `Гаражный номер`, `ГосНомер`, `Автомобиль`) VALUES
-(1, '1', 'P373XB', 'УАЗ 455 ');
+(1, '1', 'Р373ХВ 56', 'УАЗ 455'),
+(2, '3', 'о111оо56', 'КАМАЗ 255'),
+(3, '4', 'Р781ОТ56', 'ЗИЛ 874 21 '),
+(4, '5', 'Т019ЛП56', 'ГАЗ 200 01 ');
 
 -- --------------------------------------------------------
 
@@ -62,32 +65,34 @@ CREATE TABLE `drivers` (
 --
 
 INSERT INTO `drivers` (`id`, `Табельный номер`, `ФИО`, `Водительское удосоверение`, `Открытые категории`, `id_auto`) VALUES
-(1, '1', 'ИвановИванИванович', '52147989', 'B,C,CE', 1);
+(1, '1', 'ИвановИванИванович', '52147989', 'B,C,CE', 1),
+(2, '2', 'ПетровПетрПетрович', '2022535', 'В С', 2),
+(4, '3', 'АндреевАнатолийСеменович', '6789557', 'В,С,Е', 3);
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `orrder`
+-- Структура таблицы `objects`
 --
 
-CREATE TABLE `orrder` (
-  `order_id` int(11) NOT NULL,
-  `FIO` varchar(200) NOT NULL,
-  `Otdel` varchar(200) NOT NULL,
-  `Doljnost` varchar(200) NOT NULL,
-  `Datetoday` date NOT NULL,
-  `date_end` date NOT NULL,
-  `Description` varchar(500) NOT NULL,
-  `Status` varchar(20) NOT NULL
+CREATE TABLE `objects` (
+  `id_оъекта` int(11) NOT NULL,
+  `объект` varchar(55) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Дамп данных таблицы `orrder`
+-- Дамп данных таблицы `objects`
 --
 
-INSERT INTO `orrder` (`order_id`, `FIO`, `Otdel`, `Doljnost`, `Datetoday`, `date_end`, `Description`, `Status`) VALUES
-(3, 'Ненашев Сергей Павлович', 'Дорожное строительство', 'Дорожный мастер', '2019-04-03', '2019-04-04', 'Асфальт 25 тонн', 'не выполено'),
-(4, 'Ненашев Сергей Павлович', 'Дорожное строительство', 'Дорожный мастер', '2019-04-03', '2019-04-04', 'Асфальт 25 тонн', 'не выполено');
+INSERT INTO `objects` (`id_оъекта`, `объект`) VALUES
+(2, 'ул. Молодежная'),
+(3, 'ул. Набережная '),
+(4, 'ул. Транспортная '),
+(5, 'ул. Соловьева'),
+(6, 'ул. Фабричная'),
+(7, 'ул. Устюженское шоссе'),
+(8, 'ул. 8 Марта'),
+(9, 'ул. Чкалова');
 
 -- --------------------------------------------------------
 
@@ -112,7 +117,39 @@ CREATE TABLE `putevki` (
 --
 
 INSERT INTO `putevki` (`номер путевки`, `ФИО`, `Водительское удостоверения`, `Категории`, `Табельный номер`, `Гос.номер автомобиля`, `Гаражный номер автомобиля`, `Марка Автомобиля`, `Дата`) VALUES
-(2, 'ИвановИванИванович', '52147989', 'B,C,CE', '1', 'P373XB', '1', 'УАЗ', '2019-04-15');
+(2, 'ИвановИванИванович', '52147989', 'B,C,CE', '1', 'P373XB', '1', 'УАЗ', '2019-04-15'),
+(3, 'ИвановИванИванович', '52147989', 'B,C,CE', '1', 'P373XB', '1', 'УАЗ', '2019-04-18'),
+(4, 'АндреевАнатолийСеменович', '6789557', 'В,С,Е', '3', 'Р781ОТ56', '4', 'ЗИЛ', '2019-06-04'),
+(5, 'ИвановИванИванович', '52147989', 'B,C,CE', '1', 'Р373ХВ', '1', 'УАЗ', '2019-06-19'),
+(6, '', '', '', '', '', '', '', '0000-00-00'),
+(7, 'ПетровПетрПетрович', '2022535', 'В', '2', 'о111оо56', '3', 'КАМАЗ', '2019-06-11');
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `remont`
+--
+
+CREATE TABLE `remont` (
+  `id_записи` int(11) NOT NULL,
+  `Объект` varchar(100) NOT NULL,
+  `Тип_ремонта` varchar(100) NOT NULL,
+  `Расстояние (м)` varchar(20) NOT NULL,
+  `Дата` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Дамп данных таблицы `remont`
+--
+
+INSERT INTO `remont` (`id_записи`, `Объект`, `Тип_ремонта`, `Расстояние (м)`, `Дата`) VALUES
+(1, 'ул. Молодежная ', 'Ямочный ремонт', '875', '2018-04-12'),
+(2, 'ул. Набережная ', 'Ямочный ремонт', '500', '2017-04-12'),
+(3, 'ул. Транспортная ', 'Ремонт гравийных участков дорог', '235', '2017-03-07'),
+(4, 'ул. Соловьева', 'Ремоннт грунтовых автомобильных дорог', '590', '2017-07-20'),
+(5, 'ул. Фабричная', 'В рамках гарантийных обязательств', '50', '2019-06-27'),
+(6, 'ул. Устюженское шоссе', 'По муниципальному контракту', '700', '2017-09-07'),
+(7, 'ул. 8 Марта', 'В рамках гарантийных обязательств', '150', '2019-05-27');
 
 -- --------------------------------------------------------
 
@@ -134,8 +171,9 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`user_id`, `FIO`, `Otdel`, `Doljnost`, `username`, `password`) VALUES
-(1, 'Ненашев Сергей Павлович', 'Дорожное строительство', 'Дорожный мастер', 'nenashev_drsu', '123'),
-(2, 'admin', 'admin', 'admin', 'admin', 'admin');
+(1, 'Ненашев Сергей Павлович', 'Дорожное строительство', 'Инжинер-нарядчик', 'nenashev_drsu', '123'),
+(2, 'admin', 'admin', 'admin', 'admin', 'admin'),
+(7, 'Головин Анатолий Иванович', 'Дорожное строительство', 'Главный инженер', 'golovindrsu@mail.com', '3333');
 
 --
 -- Индексы сохранённых таблиц
@@ -155,16 +193,22 @@ ALTER TABLE `drivers`
   ADD KEY `id_auto` (`id_auto`);
 
 --
--- Индексы таблицы `orrder`
+-- Индексы таблицы `objects`
 --
-ALTER TABLE `orrder`
-  ADD PRIMARY KEY (`order_id`);
+ALTER TABLE `objects`
+  ADD PRIMARY KEY (`id_оъекта`);
 
 --
 -- Индексы таблицы `putevki`
 --
 ALTER TABLE `putevki`
   ADD PRIMARY KEY (`номер путевки`);
+
+--
+-- Индексы таблицы `remont`
+--
+ALTER TABLE `remont`
+  ADD PRIMARY KEY (`id_записи`);
 
 --
 -- Индексы таблицы `user`
@@ -180,31 +224,37 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT для таблицы `autos`
 --
 ALTER TABLE `autos`
-  MODIFY `id_auto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_auto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT для таблицы `drivers`
 --
 ALTER TABLE `drivers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT для таблицы `orrder`
+-- AUTO_INCREMENT для таблицы `objects`
 --
-ALTER TABLE `orrder`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+ALTER TABLE `objects`
+  MODIFY `id_оъекта` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT для таблицы `putevki`
 --
 ALTER TABLE `putevki`
-  MODIFY `номер путевки` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `номер путевки` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT для таблицы `remont`
+--
+ALTER TABLE `remont`
+  MODIFY `id_записи` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT для таблицы `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц
