@@ -3,6 +3,24 @@
 
 <?php require_once('db.php') ?>
 <?php  
+	if(isset($_GET['del'])) {
+		$idauto = $_GET['del']; 
+		mysqli_query($db, "DELETE FROM autos WHERE id_auto = $idauto");
+	}
+	if(isset($_GET['del'])) {
+		$iduser = $_GET['del']; 
+		mysqli_query($db, "DELETE FROM user WHERE user_id = $iduser");
+	}
+	if(isset($_GET['del'])) {
+		$idobj = $_GET['del']; 
+		mysqli_query($db, "DELETE FROM objects WHERE id_оъекта = $idobj");
+	}
+	if(isset($_GET['del'])) {
+		$iddriver = $_GET['del']; 
+		mysqli_query($db, "DELETE FROM drivers WHERE id = $iddriver");
+	}
+
+
 	$data_user = mysqli_query($db, "SELECT * FROM user");
 	$data_auto =  mysqli_query($db, "SELECT * FROM autos");
 	$data_drivers =  mysqli_query($db, "SELECT * FROM drivers");
@@ -18,7 +36,7 @@
 </head>
 <body>
 
-	<h2 style="float: right;" id="add">Привет <a href="#"><?php echo $_COOKIE['username']; ?></a><br> <a id="exit" href="logout.php">Выйти</a></h2>
+	<h2 style="float: right;" id="add">Привет <a href="admin.php"><?php echo $_COOKIE['username']; ?></a><br> <a id="exit" href="logout.php">Выйти</a></h2>
     <a href="putevka.php" ><input type="submit" name="use" class="btn btn-primary" value="Выписать Путевой лист"> </a> 
 	
 	<br> <br> <br>
@@ -114,6 +132,7 @@ while($row = mysqli_fetch_assoc($data_user)){
 		      <td><?php echo $row['Doljnost'] ?></td>
 		      <td><?php echo $row['username'] ?></td>
 		      <td><?php echo $row['password'] ?></td>
+		      <th><a href="?del=<?php echo $row['user_id'] ?>">X</a></th>
 		    </tr>
 <?php } ?>
 		  </tbody>
@@ -236,6 +255,7 @@ while($row = mysqli_fetch_assoc($data_user)){
 		      <th scope="col">Гаражный номер</th>
 		      <th scope="col">Гос номер</th>
 		      <th scope="col">Автомобиль</th>
+		      
 		    </tr>
 		  </thead>
 		  <tbody>
@@ -247,6 +267,7 @@ while($auto = mysqli_fetch_assoc($data_auto)){
 		      <td><?php echo $auto['Гаражный номер'] ?></td>
 		      <td><?php echo $auto['ГосНомер'] ?></td>
 		      <td><?php echo $auto['Автомобиль'] ?></td>
+		      <th><a href="?del=<?php echo $auto['id_auto'] ?>">X</a></th>
 		    </tr>
 <?php } ?>
 		  </tbody>
@@ -294,6 +315,7 @@ while($auto = mysqli_fetch_assoc($data_auto)){
 		mysqli_query($db, "INSERT INTO autos VALUES ('', '$gnum', '$gosnum', '$car')");
 		mysqli_close($db);
 	}
+
 ?>
 	<button type="submit" class="btn btn-primary"  data-toggle="modal" data-target="#avtoModal_edit">
  	 Редактировать 
@@ -406,6 +428,7 @@ while($object = mysqli_fetch_assoc($obj)){
 	    <tr>
 	      <th scope="row"><?php echo $object['id_оъекта'] ?></th>
 	      <td><?php echo $object['объект'] ?></td>
+	      <th><a href="?del=<?php echo $object['id_оъекта'] ?>">X</a></th>
 	    </tr>
 <?php } ?>
 		  </tbody>
@@ -562,6 +585,7 @@ while($drivers = mysqli_fetch_assoc($data_drivers)){
 		      <td><?php echo $drivers['Водительское удосоверение'] ?></td>
 		      <td><?php echo $drivers['Открытые категории'] ?></td>
 		      <td><?php echo $drivers['id_auto'] ?></td>
+		      <th><a href="?del=<?php echo $drivers['id'] ?>">X</a></th>
 		    </tr>
 <?php } ?>
 		  </tbody>

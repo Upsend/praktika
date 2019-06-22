@@ -21,6 +21,7 @@
 					</div>';
 				}	
 			}
+			header("Refresh:0");
 		}
 	}
 ?>
